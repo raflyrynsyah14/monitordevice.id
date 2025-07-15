@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="login-container">
+    <h2>🔐 Login Admin</h2>
+    <input type="password" id="password" placeholder="Masukkan Password">
+    <button onclick="login()">Login</button>
+    <p id="error-msg"></p>
+  </div>
+
+  <script>
+    function login() {
+      const password = document.getElementById('password').value;
+      const correct = "12345"; // Bisa Diganti Passwordnya
+
+      if (password === correct) {
+        window.location.href = "dashboard.html";
+      } else {
+        document.getElementById('error-msg').innerText = "Password salah!";
+      }
+    }
+
+        function getDeviceInfo(callback) {
+         const ua = navigator.userAgent;
+        const isMobile = /Mobile|Android/i.test(ua);
+        const os = navigator.platform;
+        const browser = navigator.userAgent;
+        const screenSize = `${screen.width}x${screen.height}`;
+
+    fetch('https://api.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        const info = {
+          device: isMobile ? 'Mobile' : 'Desktop',
+          os,
+          browser,
+          screen: screenSize,
+          ip: data.ip
+        };
+        callback(info);
+      });
+  }
+
+  function sendToGoogleSheet(info) {
+    const url = "https://script.google.com/macros/s/AKfycbzrusJyWqwuYv4pX-ZivdEgo_1Gu5Laa_y_ErtJLI85ubWi1AixwuulEBl4-kWqpMJgtw/exec";
+    fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(info)
+    });
+  }
+
+  window.onload = () => {
+    getDeviceInfo(sendToGoogleSheet);
+  };
+
+  </script>
+</body>
+</html>

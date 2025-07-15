@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Admin - Monitor Device</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://apis.google.com/js/api.js"></script>
+</head>
+<body>
+  <div class="admin-panel">
+    <h1>📊 Device Monitor Dashboard</h1>
+
+    <div class="filter">
+      <input type="text" id="searchInput" placeholder="Cari OS/IP/Browser...">
+      <button onclick="applyFilter()">🔍 Cari</button>
+    </div>
+
+    <table id="deviceTable">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Device</th>
+          <th>OS</th>
+          <th>Browser</th>
+          <th>Screen</th>
+          <th>IP</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    function startApp() {
+      gapi.load('client', loadSheetData);
+    }
+  </script>
+  <script src="https://apis.google.com/js/api.js?onload=startApp" async defer></script>
+  <script src="js/main.js"></script>
+  
+</body>
+</html>
